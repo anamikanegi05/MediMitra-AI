@@ -1,0 +1,17 @@
+[
+  {
+    "name": "AIIMS Delhi",
+    "phone": "011-26588500",
+    "location": "Delhi"
+  },
+  {
+    "name": "Fortis Hospital Gurgaon",
+    "phone": "0124-4921021",
+    "location": "Gurgaon"
+  },
+  {
+    "name": "Medanta Hospital",
+    "phone": "0124-4141414",
+    "location": "Gurgaon"
+  }
+]
