@@ -25,7 +25,7 @@
 
 ## 📂 Project Structure
 
-health_ai_project/
+MediMitra/
 │
 ├── app.py
 ├── config.py
