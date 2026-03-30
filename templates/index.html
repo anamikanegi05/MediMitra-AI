@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MediMitra - AI Health Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="bg-animation"></div>
+
+<div class="main-container">
+
+    <!-- HEADER -->
+    <div class="title">
+        <h1>MediMitra</h1>
+        <p>AI Powered Smart Health Analysis</p>
+    </div>
+
+    <!-- INPUT CARD -->
+    <div class="card glow">
+        <form method="POST">
+            <textarea name="symptoms" placeholder="Describe your symptoms..."></textarea>
+            <button type="submit">Analyze Now</button>
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    {% if response %}
+    <div class="result-card glow">
+        <h2>🧠 Diagnosis</h2>
+        <p>{{ response }}</p>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
