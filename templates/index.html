@@ -1,38 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>MediMitra - AI Health Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header>
+            <h1>MediMitra-AI</h1>
+            <p>Your AI-powered health suggestion assistant</p>
+        </header>
 
-<div class="bg-animation"></div>
+        <!-- Main Section -->
+        <main>
+            
+            <!-- Form -->
+            <form method="POST" class="symptom-form">
+                <input type="text" name="symptoms" placeholder="Describe your symptom e.g. chest pain" required>
+                <button type="submit">Get Suggestion</button>
+            </form>
 
-<div class="main-container">
+            <!-- Latest Suggestion -->
+            {% if suggestion %}
+            <div class="suggestion-card">
+                <pre>{{ suggestion }}</pre>
+            </div>
+            {% endif %}
 
-    <!-- HEADER -->
-    <div class="title">
-        <h1>MediMitra</h1>
-        <p>AI Powered Smart Health Analysis</p>
+            <!-- Chat History -->
+            {% if chats %}
+            <div class="chat-history">
+                <h3>Previous Consultations</h3>
+
+                {% for chat in chats %}
+                <div class="chat-item">
+                    <p><strong>You:</strong> {{ chat[0] }}</p>
+                    <p><strong>MediMitra:</strong> {{ chat[1] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; Anamika Negi | This app provides suggestions only, not expert advice.</p>
+        </footer>
+
     </div>
-
-    <!-- INPUT CARD -->
-    <div class="card glow">
-        <form method="POST">
-            <textarea name="symptoms" placeholder="Describe your symptoms..."></textarea>
-            <button type="submit">Analyze Now</button>
-        </form>
-    </div>
-
-    <!-- RESULT -->
-    {% if response %}
-    <div class="result-card glow">
-        <h2>🧠 Diagnosis</h2>
-        <p>{{ response }}</p>
-    </div>
-    {% endif %}
-
-</div>
-
 </body>
 </html>
