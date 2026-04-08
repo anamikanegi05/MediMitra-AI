@@ -1,42 +1,25 @@
 from modules.llm_handler import LLMHandler
+from modules.ocr_server import OCRHandler
 from modules.classifier import Classifier
 from modules.decision_engine import DecisionEngine
-from utils.hospital_finder import get_nearby_hospital
-from modules.ocr_server import extract_text
-
+from database import save_chat
 
 class MCPServer:
     def __init__(self):
         self.llm = LLMHandler()
+        self.ocr = OCRHandler()
         self.classifier = Classifier()
         self.decision_engine = DecisionEngine()
 
     def process(self, user_input):
+        self.llm.store_input(user_input)
 
-        # Step 0: OCR layer
-        text = extract_text(user_input, is_image=False)
+        self.ocr.process_text(user_input)
 
-        # Step 1: Extract symptoms
-        symptoms = self.llm.extract_symptoms(text)
+        probs = self.classifier.predict(user_input)
 
-        # (Optional safety)
-        if not symptoms:
-            return "Could not detect symptoms. Please describe clearly."
+        suggestion = self.decision_engine.make_decision(user_input, probs)
 
-        # Step 2: Classify disease
-        disease = self.classifier.predict(symptoms)
+        save_chat(user_input, suggestion)
 
-        # Step 3: Decision
-        is_serious = self.decision_engine.is_serious(symptoms)
-
-        # Step 4: Hospital if serious
-        hospital_info = None
-        if is_serious:
-            hospital_info = get_nearby_hospital()
-
-        # Step 5: Generate response
-        response = self.llm.generate_response(
-            symptoms, disease, is_serious, hospital_info
-        )
-
-        return response
+        return suggestion
